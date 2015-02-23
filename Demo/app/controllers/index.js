@@ -1,52 +1,35 @@
-function transform(model){
-	var carObject = model.toJSON();
-	var output = 	
-	{
-		"title" : carObject.model + " by " + carObject.make,
-		"id" :model.cid
-	};
-	return output;
-}
+//controllers/index.js
+//Defining the Collection in the controlelr and not the view
+Alloy.Collections.instance("cars");
+//controllers/index.js
+//create a new controller for view-controller pair
+//that will eventually render the table
+var carsController = Alloy.createController("cars");
 
-function filter(collection)
-{
-	return collection.where(
+//add the data to the collection after the  view-controller pair is created
+Alloy.Collections.cars.reset(
+	[
 		{
-			make: "Honda"
+			"make":"Honda",
+		 	"model":"Civic"
+		},
+		{
+			"make":"Honda",
+			"model":"Accord"
+		},
+		{
+			"make":"Ford",
+			"model":"Escape"
+		},
+		{
+			"make":"Ford",
+			"model":"Mustang"
+		},
+		{
+			"make":"Nissan",
+			"model":"Altima"
 		}
-	);
-}
+	]
+);
 
-$.mainWindow.addEventListener("close", function()
-{
-	$.destroy();
-});
-
-$.mainWindow.addEventListener("open", function(){
-	Alloy.Collections.cars.reset(
-		[
-			{
-				"make":"Honda",
-			 	"model":"Civic"
-			},
-			{
-				"make":"Honda",
-				"model":"Accord"
-			},
-			{
-				"make":"Ford",
-				"model":"Escape"
-			},
-			{
-				"make":"Ford",
-				"model":"Mustang"
-			},
-			{
-				"make":"Nissan",
-				"model":"Altima"
-			}
-		]
-	);			
-});
-
-$.mainWindow.open();
+carsController.mainWindow.open();
